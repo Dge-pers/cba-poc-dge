@@ -158,3 +158,4 @@ In the Details UI, copy the 36 character UNID **ID** field. This is the **Worksp
 - If you want, filter the Log Type by selecting the drop-down and selecting **Application(APP)**.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![](readme_images/filter1.PNG)
+# cba-poc-dge
