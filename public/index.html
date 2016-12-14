@@ -1,0 +1,127 @@
+<html>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/panels.js"></script>
+  <script src="js/api.js"></script>
+
+<head>
+  <base href="/">
+  <title>CBA - Watson Services Demo</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="og:title" content="CBA - App Demo" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>  
+  <div id="contentParent" class="responsive-columns-wrapper">
+    <div id="chat-column-holder" class="responsive-column content-column">
+    
+      <div id="feedbackSub">
+	    <form name='formFeedback' class="form-log-feedback">
+	        <p style="font-size: 16px;">SVP aajoutez un commentaire à votre feedback:</p>
+	        <input id="feedComment" type="text" placeholder="" value=""><br>
+			<input class="button-submit" type="button" value="CANCEL" id="cancelFeedComment">
+			<input class="button-submit" type="button" value="SUBMIT" id="subFeedComment">
+		</form>
+      </div>
+      
+      <img id="chat-column-logo" src="../img/logo/oliviaLogoW.png">
+      
+      <div class="chat-column">
+        <div id="scrollingChat"></div>        
+        <label for="textInput" class="inputOutline">
+          <input id="textInput" class="input responsive-column"
+            placeholder="Record or Type your message here..." type="text"
+            onkeydown="ConversationPanel.inputKeyDown(event, this)">
+        </label>
+        <div id="mic-holder" class="micHolder" onclick="Api.micListen(this.className)"></div>
+        <div id="spin-holder" class="spinHolder"><img class="spinLoad" src="../img/loader/spinLoader.gif"></div>
+        <div id="sendT-holder" class="sendTHolder" onclick="Api.sendTranscript()"><img class="sendT" src="../img/loader/sendT.png"></div>
+      </div>
+    </div>
+    
+  <div id='logSub' class='logCan'>
+  	<form class='form-log-con'>
+		<p style="font-size: medium;">SVP ajoutez un commentaire au log de conversation:</p>
+		<input id="logComment" type="text" placeholder="">
+		<br/>
+		<input class="button-submit" type="button" value="CANCEL" onclick="configPanel.cancelLogSub()">
+		<input class="button-submit" type="button" value="SUBMIT" onclick="Api.appendToLog(form)">
+  	</form>
+  </div>
+  <div id="communityPost">  
+  <form name='formCommunity' class="form-community">
+    <p>Désolé, aucune aide possible avec la question suivante:<br></p>
+    <input style="font-size:14px" id="feedQuestion" type="text" placeholder=""><br>
+    <p>Would you like to post your question on a community so other users can try to help you?</p>
+	<input class="button-submit" type="button" value="CANCEL" onclick="configPanel.cancelLogSub()">
+	<input class="button-submit" type="button" value="POST" onclick="Api.setForumTopic(form.feedQuestion.value)">
+  </form>
+  </div>
+  
+    <div id="slider" class="exstension">
+      <div id="payload-header" class="payload" onclick="PayloadPanel.togglePanel(event, this)">
+		  <img class="option not-full" id="sliderImg" src="../img/buttons/slideLeft.png">
+		<div id="sliderTriangle" class="button"></div>
+		<div style="height: 100%; padding-top: 3rem" ontouchstart="touchStart(event,'slider');" ontouchend="touchEnd(event);" ontouchmove="touchMove(event);" ontouchcancel="touchCancel(event);">
+		</div>
+      </div>
+    </div>
+    <div id="payload-column" class="fixed-column content-column">
+      <div id="payload-initial-message"></div>
+      <div id="payload-header" class="payload">
+      	<div class="header-text">
+      	  <div id="payload-title"><p style="margin: 0.7rem 0 0 0">CBA Demonstrator</p></div>
+      	  <div id="view-change-button" class="buttonPayload" style="">
+		  	<div  class="tooltip">
+		  		<img class="clear-icn" id="resetImg" src="../img/buttons/reset.png" onclick="configPanel.clearPanels()">
+			  	<span  class="tooltiptext">Reset the conversation</span >
+		  	</div>
+		  </div>
+	      <div id="view-change-button" class="buttonPayload volSet" style="">
+		  	<div class="tooltip" id="volSet">
+			   <img id="resetImg" class="volOn" src="../img/buttons/volOn.png" onclick="configPanel.setVolume(this.className)">
+			   <span class="tooltiptext">CBA's volume on/off switch</span>
+		  	</div>
+		  </div>
+		  <div id="view-change-button" class="buttonPayload stroeConv" style="">
+		  	<div  class="tooltip">
+		  		<img class="log-sub-icn" id="resetImg" src="../img/buttons/saveLogs.png" onclick="configPanel.confirmLogSub()">
+			  	<span  class="tooltiptext">Store the conversation</span >
+		  	</div>
+		  </div>
+      	  <div id="view-change-button" class="buttonPayload displayLog" style="">
+		  	<div  class="tooltip">
+		  		<img class="log-fetch-icn" id="resetImg" src="../img/buttons/displayLogs.png" onclick="Api.getConvLog()">
+			  	<span  class="tooltiptext">Display logged conversations</span >
+		  	</div>
+		  </div>
+      	  <div id="view-change-button" class="buttonPayload extUrl" style="">
+		  	<div  class="tooltip">
+			  	<img id="resetImg" src="../img/buttons/external.png" onclick="configPanel.setLink()">
+			  	<span  class="tooltiptext">Open or download a document</span >
+		  	</div>
+		  </div>
+      	</div>
+      </div>
+      <div id="response-panel" class="fixed-column content-column"></div>
+      
+      <div id="logDatesContainer"></div>    
+      
+      <div id="payload-request" class="hide"></div>
+      <div id="payload-response" class="hide"></div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/conversation.js"></script>
+  <script src="js/payload.js"></script>
+  <script src="js/global.js"></script>
+  <script src="js/swipe.js"></script>
+  <script src="js/aRecorder.js"></script>
+
+</body>
+</html>

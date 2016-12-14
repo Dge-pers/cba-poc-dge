@@ -1,0 +1,8 @@
+---
+applications:
+- command: npm start
+  path: .
+  instances: 1
+  memory: 512MB
+  name: cba-poc-dge
+  host: cba-poc-dge
